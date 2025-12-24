@@ -22,25 +22,17 @@ NC='\e[0m'
 red='\e[1;31m'
 green='\e[0;32m'
 TIME=$(date '+%d %b %Y')
-
-# Variabel Telegram yang DIKEMBALIKAN
-# HARAP GANTI DENGAN KEY BOT TELEGRAM DAN CHAT ID ANDA
-KEY="GANTI_DENGAN_KEY_BOT_ANDA"  # Contoh: 1234567890:AbC-DeF...
-ID="GANTI_DENGAN_CHAT_ID_ANDA"    # Contoh: 123456789
-URL="https://api.telegram.org/bot$KEY/sendMessage"
-
-# ipsaya dihapus (tidak terkait Telegram)
+ipsaya=$(wget -qO- ipinfo.io/ip)
 TIMES="10"
-# eval $(wget...) dihapus (terkait izin IP)
-# URL dikembalikan di atas
-
+eval $(wget -qO- "https://raw.githubusercontent.com/NEW-KJSVIP/Kjs-projeck/main/Fls/botkey")
+URL="https://api.telegram.org/bot$KEY/sendMessage"
 clear
 export IP=$( curl -sS icanhazip.com )
 clear
 clear && clear && clear
 clear;clear;clear
 echo -e "${YELLOW}----------------------------------------------------------${NC}"
-echo -e "\033[96;1m              WELCOME TO SRICPT METSOTRE              \033[0m"
+echo -e "\033[96;1m      WELCOME TO SRICPT METSOTRE          \033[0m"
 echo -e "${YELLOW}----------------------------------------------------------${NC}"
 echo ""
 sleep 3
@@ -58,8 +50,7 @@ else
 echo -e "${EROR} Your OS Is Not Supported ( ${YELLOW}$( cat /etc/os-release | grep -w PRETTY_NAME | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/PRETTY_NAME//g' )${NC} )"
 exit 1
 fi
-
-if [[ $IP == "" ]]; then
+if [[ $ipsaya == "" ]]; then
 echo -e "${EROR} IP Address ( ${RED}Not Detected${NC} )"
 else
 echo -e "${OK} IP Address ( ${green}$IP${NC} )"
@@ -86,8 +77,9 @@ MYIP=$(curl -sS ipv4.icanhazip.com)
 echo -e "\e[32mloading...\e[0m"
 clear
 clear
-# Bagian izin IP telah dihapus
-username="vpnuser" # Default username
+
+echo -e "\e[32mloading...\e[0m"
+clear
 REPO="https://raw.githubusercontent.com/NEW-KJSVIP/Kjs-projeck/main/"
 start=$(date +%s)
 secs_to_human() {
@@ -203,7 +195,7 @@ apt-get -y install \
   libcap-ng-dev libcap-ng-utils libselinux1-dev libcurl4-openssl-dev flex bison make \
   libnss3-tools libevent-dev xl2tpd apt git speedtest-cli p7zip-full libjpeg-dev \
   zlib1g-dev python3-full shc build-essential nodejs nginx php \
-  php-fpm php-cli php-mysql p7zip-full squid libcurl4-openssl-dev lsb-release 
+  php-fpm php-cli php-mysql p7zip-full squid libcurl4-openssl-dev lsb-release  
 apt purge -y apache2 stunnel4 stunnel
 sudo systemctl enable chrony --now
 chronyc sourcestats -v
@@ -217,36 +209,31 @@ clear
 echo -e "    ----------------------------------"
 echo -e "   |\e[1;32mPlease Select a Domain Type Below \e[0m|"
 echo -e "    ----------------------------------"
-echo -e "     \e[1;32m1)\e[0m Your Domain"
-echo -e "     \e[1;32m2)\e[0m Random Domain "
-echo -e "   ------------------------------------"
-read -p "   Please select numbers 1-2 or Any Button(Random) : " host
+echo -e "      \e[1;32m1)\e[0m Your Domain"
+echo -e "      \e[1;32m2)\e[0m Random Domain "
+echo -e "    ------------------------------------"
+read -p "    Please select numbers 1-2 or Any Button(Random) : " host
 echo ""
 if [[ $host == "1" ]]; then
 clear
 echo ""
 echo ""
-echo -e "   \e[1;36m_______________________________$NC"
-echo -e "   \e[1;32m      CHANGES DOMAIN $NC"
-echo -e "   \e[1;36m_______________________________$NC"
+echo -e "    \e[1;36m_______________________________$NC"
+echo -e "    \e[1;32m      CHANGES DOMAIN $NC"
+echo -e "    \e[1;36m_______________________________$NC"
 echo -e ""
-read -p "   INPUT YOUR DOMAIN :   " host1
+read -p "    INPUT YOUR DOMAIN :    " host1
 echo "IP=${host1}" >> /var/lib/kyt/ipvps.conf
 echo $host1 > /etc/xray/domain
 echo $host1 > /root/domain
 echo ".::. METS STORE .::." > /etc/xray/username
-username=".::. METS STORE .::." # Mengatur username
 echo ""
 elif [[ $host == "2" ]]; then
 wget ${REPO}Fls/cf.sh && chmod +x cf.sh && ./cf.sh
 rm -f /root/cf.sh
 clear
-username="vpnuser" # Mengatur username default
 else
 print_install "Random Subdomain/Domain is Used"
-wget ${REPO}Fls/cf.sh && chmod +x cf.sh && ./cf.sh
-rm -f /root/cf.sh
-username="vpnuser" # Mengatur username default
 clear
 fi
 }
@@ -412,40 +399,30 @@ clear
 function instal(){
 clear
 first_setup
-# make_folder_xray (fungsi tidak didefinisikan)
+make_folder_xray
 pasang_domain
 nginx_install
 base_package
-# password_default (fungsi tidak didefinisikan)
-# pasang_ssl (fungsi tidak didefinisikan)
-# install_xray (fungsi tidak didefinisikan)
-# ssh (fungsi tidak didefinisikan)
-# udp_mini (fungsi tidak didefinisikan)
-# ssh_slow (fungsi tidak didefinisikan)
-# ins_SSHD (fungsi tidak didefinisikan)
-# ins_dropbear (fungsi tidak didefinisikan)
-# ins_vnstat (fungsi tidak didefinisikan)
-# ins_openvpn (fungsi tidak didefinisikan)
-# ins_backup (fungsi tidak didefinisikan)
-# ins_swab (fungsi tidak didefinisikan)
-# ins_Fail2ban (fungsi tidak didefinisikan)
-# ins_epro (fungsi tidak didefinisikan)
+password_default
+pasang_ssl
+install_xray
+ssh
+udp_mini
+ssh_slow
+ins_SSHD
+ins_dropbear
+ins_vnstat
+ins_openvpn
+ins_backup
+ins_swab
+ins_Fail2ban
+ins_epro
 ins_restart
 menu
 profile
 enable_services
-# restart_system (fungsi tidak didefinisikan)
+restart_system
 }
-
-# --- FUNGSI TELEGRAM BARU (DIKEMBALIKAN) ---
-function send_telegram_message() {
-    MESSAGE=$1
-    if [ ! -z "$KEY" ] && [ ! -z "$ID" ]; then
-        curl -s -X POST "$URL" -d chat_id="$ID" -d text="$MESSAGE" > /dev/null
-    fi
-}
-# ---------------------------------------------
-
 instal
 NEW_FILE_MAX=65535
 NF_CONNTRACK_MAX="net.netfilter.nf_conntrack_max=262144"
@@ -476,19 +453,6 @@ rm -rf /root/README.md
 rm -rf /root/domain
 secs_to_human "$(($(date +%s) - ${start}))"
 
-# Mengirim pesan Telegram saat instalasi selesai
-send_telegram_message "Instalasi Skrip VPS Baru Selesai!
-Hostname: $username
-IP: $IP
-OS: $OS_Name
-Waktu Instalasi: $(secs_to_human "$(($(date +%s) - ${start}))" | sed 's/Installation time : //g')"
-
-sudo hostnamectl
- set-hostname $username
-LOCAL_IP="127.0.1.1"
-if ! grep -q "$username" /etc/hosts; then
-    echo "$LOCAL_IP    $username" >> /etc/hosts
-fi
 clear
 echo -e ""
 echo -e ""
