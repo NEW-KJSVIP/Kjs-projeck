@@ -32,7 +32,7 @@ clear
 clear && clear && clear
 clear;clear;clear
 echo -e "${YELLOW}----------------------------------------------------------${NC}"
-echo -e "\033[96;1m      WELCOME TO SRICPT METSOTRE          \033[0m"
+echo -e "\033[96;1m              WELCOME TO SRICPT METSOTRE              \033[0m"
 echo -e "${YELLOW}----------------------------------------------------------${NC}"
 echo ""
 sleep 3
@@ -77,7 +77,33 @@ MYIP=$(curl -sS ipv4.icanhazip.com)
 echo -e "\e[32mloading...\e[0m"
 clear
 clear
-
+rm -f /usr/bin/user
+username=$(curl https://raw.githubusercontent.com/kjsstore/izin/main/ip | grep $MYIP | awk '{print $2}')
+echo "$username" >/usr/bin/user
+expx=$(curl https://raw.githubusercontent.com/kjsstore/izin/main/ip | grep $MYIP | awk '{print $3}')
+echo "$expx" >/usr/bin/e
+username=$(cat /usr/bin/user)
+exp=$(cat /usr/bin/e)
+clear
+d1=$(date -d "$valid" +%s)
+d2=$(date -d "$today" +%s)
+certifacate=$(((d1 - d2) / 86400))
+DATE=$(date +'%Y-%m-%d')
+datediff() {
+d1=$(date -d "$1" +%s)
+d2=$(date -d "$2" +%s)
+echo -e "$COLOR1 $NC Expiry In   : $(( (d1 - d2) / 86400 )) Days"
+}
+mai="datediff "$Exp" "$DATE""
+Info="(${green}Active${NC})"
+Error="(${RED}ExpiRED${NC})"
+today=`date -d "0 days" +"%Y-%m-%d"`
+Exp1=$(curl https://raw.githubusercontent.com/kjsstore/izin/main/ip | grep $MYIP | awk '{print $4}')
+if [[ $today < $Exp1 ]]; then
+sts="${Info}"
+else
+sts="${Error}"
+fi
 echo -e "\e[32mloading...\e[0m"
 clear
 REPO="https://raw.githubusercontent.com/NEW-KJSVIP/Kjs-projeck/main/"
@@ -195,7 +221,7 @@ apt-get -y install \
   libcap-ng-dev libcap-ng-utils libselinux1-dev libcurl4-openssl-dev flex bison make \
   libnss3-tools libevent-dev xl2tpd apt git speedtest-cli p7zip-full libjpeg-dev \
   zlib1g-dev python3-full shc build-essential nodejs nginx php \
-  php-fpm php-cli php-mysql p7zip-full squid libcurl4-openssl-dev lsb-release  
+  php-fpm php-cli php-mysql p7zip-full squid libcurl4-openssl-dev lsb-release 
 apt purge -y apache2 stunnel4 stunnel
 sudo systemctl enable chrony --now
 chronyc sourcestats -v
@@ -209,20 +235,20 @@ clear
 echo -e "    ----------------------------------"
 echo -e "   |\e[1;32mPlease Select a Domain Type Below \e[0m|"
 echo -e "    ----------------------------------"
-echo -e "      \e[1;32m1)\e[0m Your Domain"
-echo -e "      \e[1;32m2)\e[0m Random Domain "
-echo -e "    ------------------------------------"
-read -p "    Please select numbers 1-2 or Any Button(Random) : " host
+echo -e "     \e[1;32m1)\e[0m Your Domain"
+echo -e "     \e[1;32m2)\e[0m Random Domain "
+echo -e "   ------------------------------------"
+read -p "   Please select numbers 1-2 or Any Button(Random) : " host
 echo ""
 if [[ $host == "1" ]]; then
 clear
 echo ""
 echo ""
-echo -e "    \e[1;36m_______________________________$NC"
-echo -e "    \e[1;32m      CHANGES DOMAIN $NC"
-echo -e "    \e[1;36m_______________________________$NC"
+echo -e "   \e[1;36m_______________________________$NC"
+echo -e "   \e[1;32m      CHANGES DOMAIN $NC"
+echo -e "   \e[1;36m_______________________________$NC"
 echo -e ""
-read -p "    INPUT YOUR DOMAIN :    " host1
+read -p "   INPUT YOUR DOMAIN :   " host1
 echo "IP=${host1}" >> /var/lib/kyt/ipvps.conf
 echo $host1 > /etc/xray/domain
 echo $host1 > /root/domain
@@ -452,7 +478,11 @@ rm -rf /root/LICENSE
 rm -rf /root/README.md
 rm -rf /root/domain
 secs_to_human "$(($(date +%s) - ${start}))"
-
+sudo hostnamectl set-hostname $username
+LOCAL_IP="127.0.1.1"
+if ! grep -q "$username" /etc/hosts; then
+    echo "$LOCAL_IP    $username" >> /etc/hosts
+fi
 clear
 echo -e ""
 echo -e ""
